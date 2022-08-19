@@ -25,7 +25,7 @@ public class Spid {
     private Timestamp createdAt;
     private String createdBy;
     private String status;
-    private Type type;
+    private String type;
     @OneToOne(cascade = CascadeType.ALL)
     private Users users;
 }
