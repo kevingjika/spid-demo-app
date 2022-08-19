@@ -1,5 +1,6 @@
 package com.project.springbootfinalproject.controllers;
 
+import com.project.springbootfinalproject.entities.Spid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -39,28 +40,5 @@ public class MainController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
 }

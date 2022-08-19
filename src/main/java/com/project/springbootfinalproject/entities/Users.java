@@ -33,5 +33,4 @@ public class Users {
     private Timestamp createdAt;
     private String createdBy;
 
-
 }

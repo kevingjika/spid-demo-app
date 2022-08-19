@@ -36,4 +36,13 @@ public class UsersService {
         return usersRepository.findById(id);
     }
 
+    public void deleteUser(long id) throws Exception {
+        Optional<Users>  findIfUsersExists = usersRepository.findById(id);
+
+        if(!findIfUsersExists.isPresent()) {
+            throw new Exception("User-i nuk ekziston.");
+        }
+        usersRepository.deleteById(id);
+    }
+
 }
