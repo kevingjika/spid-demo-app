@@ -1,6 +1,7 @@
 package com.project.springbootfinalproject.controllers;
 
 import com.project.springbootfinalproject.entities.Spid;
+import com.project.springbootfinalproject.services.SpidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import com.project.springbootfinalproject.services.UsersService;
 public class MainController {
 
     UsersService usersService;
+    SpidService spidService;
 
     MainController(UsersService usersService){
         this.usersService = usersService;
@@ -26,8 +28,8 @@ public class MainController {
             @RequestBody Users users
     ) throws Exception {
         log.info(users.getName());
-        usersService.createUser(users);
-        return new ResponseEntity(users, HttpStatus.OK);
+        Users savedUser = usersService.createUser(users);
+        return new ResponseEntity(savedUser, HttpStatus.OK);
     }
 
     @PutMapping("/edit/user")
@@ -36,7 +38,28 @@ public class MainController {
             @RequestParam long id
     ) throws Exception {
         users.setId(id);
-        return new ResponseEntity(usersService.createUser(users), HttpStatus.OK);
+        Users updatedUser = usersService.createUser(users);
+        return new ResponseEntity(updatedUser, HttpStatus.OK);
+    }
+
+    @PostMapping("/create/spid")
+    public ResponseEntity<Spid> createSpid (
+            @RequestBody Spid spid
+    ) throws Exception {
+        log.info(spid.getStatus());
+        log.info(spid.getType());
+        Spid savedSpid = spidService.createSpid(spid);
+        return new ResponseEntity(savedSpid, HttpStatus.OK);
+    }
+
+    @PutMapping("/edit/spid")
+    public ResponseEntity<Spid> editSpid (
+            @RequestBody Spid spid,
+            @RequestParam long id
+    ) throws Exception {
+        spid.setId(id);
+        Spid updatedSpid = spidService.createSpid(spid);
+        return new ResponseEntity(updatedSpid, HttpStatus.OK);
     }
 
 

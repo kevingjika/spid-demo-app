@@ -21,7 +21,6 @@ public class Spid {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private long id;
-    private long userId;
     private Timestamp createdAt;
     private String createdBy;
     private String status;

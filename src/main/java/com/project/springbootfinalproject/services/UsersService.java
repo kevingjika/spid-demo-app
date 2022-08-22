@@ -20,7 +20,7 @@ public class UsersService {
     }
 
     public Users createUser (Users users) throws Exception {
-        Optional<Users> findIfUserExists = usersRepository.findByName(users.getName());
+        Optional<Users> findIfUserExists = usersRepository.findByUsername(users.getUsername());
 
         if(findIfUserExists.isPresent()){
             throw new NoUsersFoundException("User-i ekziston.");
@@ -36,13 +36,13 @@ public class UsersService {
         return usersRepository.findById(id);
     }
 
-    public void deleteUser(long id) throws Exception {
+    public void editUser(long id) throws Exception {
         Optional<Users>  findIfUsersExists = usersRepository.findById(id);
 
         if(!findIfUsersExists.isPresent()) {
             throw new Exception("User-i nuk ekziston.");
         }
-        usersRepository.deleteById(id);
+        usersRepository.editById(id);
     }
 
 }

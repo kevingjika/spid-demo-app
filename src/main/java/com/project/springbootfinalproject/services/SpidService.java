@@ -20,12 +20,28 @@ import java.util.Optional;
 public class SpidService {
 
 
-    SpidRepository spidRepository;
+    static SpidRepository spidRepository;
 
     SpidService(SpidRepository spidRepository){
         this.spidRepository = spidRepository;
     }
 
+    public static Spid createSpid(Spid spid) throws Exception {
+        Optional<Spid> findIfSpidExists = spidRepository.findById(spid.getId());
 
+        if(findIfSpidExists.isPresent()){
+            throw new NoUsersFoundException("Spid-i ekziston.");
+        }
+        return spidRepository.save(spid);
+    }
+
+    public void editSpid(long id) throws Exception {
+        Optional<Spid> findIfSpidExists = spidRepository.findById(id);
+
+        if(!findIfSpidExists.isPresent()) {
+            throw new Exception("Spid-i nuk ekziston.");
+        }
+        spidRepository.editById(id);
+    }
 
 }
