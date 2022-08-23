@@ -10,5 +10,4 @@ import java.util.Optional;
 @Repository
 public interface SpidRepository extends JpaRepository <Spid,Long>{
     Optional<Users> findById (String message);
-    void editById(long id);
 }

@@ -1,6 +1,9 @@
 package com.project.springbootfinalproject.services;
 
+import com.project.springbootfinalproject.entities.Spid;
+import com.project.springbootfinalproject.entities.Status;
 import com.project.springbootfinalproject.repository.SpidRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,7 +45,14 @@ public class UsersService {
         if(!findIfUsersExists.isPresent()) {
             throw new Exception("User-i nuk ekziston.");
         }
-        usersRepository.editById(id);
+        usersRepository.save(findIfUsersExists.get());
     }
 
+    public void deleteUser(long id) throws Exception{
+        Optional<Users> findIfUsersExists = usersRepository.findById(id);
+        if(!findIfUsersExists.isPresent()) {
+            throw new Exception ("User-i nuk do te fshihet.");
+        }
+        usersRepository.deleteById(id);
+    }
 }

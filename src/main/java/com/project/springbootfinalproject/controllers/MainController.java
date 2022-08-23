@@ -4,22 +4,23 @@ import com.project.springbootfinalproject.entities.Spid;
 import com.project.springbootfinalproject.services.SpidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.project.springbootfinalproject.entities.Users;
 import com.project.springbootfinalproject.services.UsersService;
 
+import java.time.LocalDateTime;
+
 @RestController
-@RequestMapping(value = "/user")
 public class MainController {
 
+    @Autowired
     UsersService usersService;
+    @Autowired
     SpidService spidService;
 
-    MainController(UsersService usersService){
-        this.usersService = usersService;
-    }
 
     private static final Logger log =   LoggerFactory.getLogger(MainController.class);
 
@@ -28,6 +29,7 @@ public class MainController {
             @RequestBody Users users
     ) throws Exception {
         log.info(users.getName());
+        users.setCreatedAt(LocalDateTime.now());
         Users savedUser = usersService.createUser(users);
         return new ResponseEntity(savedUser, HttpStatus.OK);
     }
@@ -42,12 +44,21 @@ public class MainController {
         return new ResponseEntity(updatedUser, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/user")
+    public ResponseEntity<Users> deleteUser (
+            @RequestParam(name = "id") long id
+    ) throws Exception {
+        usersService.deleteUser(id);
+        return new ResponseEntity("User-i u fshi me sukses.", HttpStatus.OK);
+    }
+
     @PostMapping("/create/spid")
     public ResponseEntity<Spid> createSpid (
             @RequestBody Spid spid
     ) throws Exception {
         log.info(spid.getStatus());
         log.info(spid.getType());
+        spid.setCreatedAt(LocalDateTime.now());
         Spid savedSpid = spidService.createSpid(spid);
         return new ResponseEntity(savedSpid, HttpStatus.OK);
     }
@@ -58,8 +69,16 @@ public class MainController {
             @RequestParam long id
     ) throws Exception {
         spid.setId(id);
-        Spid updatedSpid = spidService.createSpid(spid);
+        Spid updatedSpid = spidService.editSpid(spid);
         return new ResponseEntity(updatedSpid, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/spid")
+    public ResponseEntity<Spid> deleteSpid (
+            @RequestParam(name = "id") long id
+    ) throws Exception {
+        spidService.deleteSpid(id);
+        return new ResponseEntity("Spid-i u fshi me sukses.", HttpStatus.OK);
     }
 
 

@@ -11,5 +11,4 @@ public interface UsersRepository extends JpaRepository <Users,Long> {
     Optional<Users> findByName (String message);
     Optional<Users> findByUsername (String message);
 
-    void editById(long id);
 }

@@ -30,7 +30,7 @@ public class Users {
     private String username;
     private String password;
     private String email;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     private String createdBy;
 
 }
