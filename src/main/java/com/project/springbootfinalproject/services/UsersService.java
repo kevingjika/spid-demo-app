@@ -1,16 +1,11 @@
 package com.project.springbootfinalproject.services;
 
-import com.project.springbootfinalproject.entities.Spid;
-import com.project.springbootfinalproject.entities.Status;
-import com.project.springbootfinalproject.repository.SpidRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.project.springbootfinalproject.entities.Users;
 import com.project.springbootfinalproject.exceptions.NoUsersFoundException;
 import com.project.springbootfinalproject.repository.UsersRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,4 +50,9 @@ public class UsersService {
         }
         usersRepository.deleteById(id);
     }
+
+    public List <Users> findAll() {
+        return usersRepository.findAll();
+    }
+
 }

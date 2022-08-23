@@ -12,6 +12,8 @@ import com.project.springbootfinalproject.entities.Users;
 import com.project.springbootfinalproject.services.UsersService;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MainController {
@@ -21,13 +23,23 @@ public class MainController {
     @Autowired
     SpidService spidService;
 
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
-    private static final Logger log =   LoggerFactory.getLogger(MainController.class);
+   @GetMapping("/get/users")
+    public ResponseEntity<Users> getAllUsers() {
+        List<Users> listOfUsers = usersService.findAll();
+        return new ResponseEntity(listOfUsers, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/user")
+    public ResponseEntity<Users> getUserById(@RequestParam long id){
+        Optional<Users> oneUser = usersService.findById(id);
+        return new ResponseEntity(oneUser, HttpStatus.OK);
+    }
+
 
     @PostMapping("/create/user")
-    public ResponseEntity<Users> createUser(
-            @RequestBody Users users
-    ) throws Exception {
+    public ResponseEntity<Users> createUser(@RequestBody Users users) throws Exception {
         log.info(users.getName());
         users.setCreatedAt(LocalDateTime.now());
         Users savedUser = usersService.createUser(users);
@@ -35,27 +47,36 @@ public class MainController {
     }
 
     @PutMapping("/edit/user")
-    public ResponseEntity<Users> editUser(
-            @RequestBody Users users,
-            @RequestParam long id
-    ) throws Exception {
+    public ResponseEntity<Users> editUser(@RequestBody Users users, @RequestParam long id) throws Exception {
         users.setId(id);
         Users updatedUser = usersService.createUser(users);
         return new ResponseEntity(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/user")
-    public ResponseEntity<Users> deleteUser (
+    public ResponseEntity<Users> deleteUser(
             @RequestParam(name = "id") long id
     ) throws Exception {
         usersService.deleteUser(id);
         return new ResponseEntity("User-i u fshi me sukses.", HttpStatus.OK);
     }
 
+    @GetMapping("/get/spids")
+    public ResponseEntity<Spid> getAllSpids() {
+        List<Spid> listOfSpids = spidService.findAll();
+        return new ResponseEntity(listOfSpids, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/spid")
+    public ResponseEntity<Spid> getSpid(@RequestParam long id) throws Exception{
+        Spid oneSpid = spidService.findSpidById(id);
+        return new ResponseEntity(oneSpid, HttpStatus.OK);
+    }
+
+
+
     @PostMapping("/create/spid")
-    public ResponseEntity<Spid> createSpid (
-            @RequestBody Spid spid
-    ) throws Exception {
+    public ResponseEntity<Spid> createSpid(@RequestBody Spid spid) throws Exception {
         log.info(spid.getStatus());
         log.info(spid.getType());
         spid.setCreatedAt(LocalDateTime.now());
@@ -64,23 +85,17 @@ public class MainController {
     }
 
     @PutMapping("/edit/spid")
-    public ResponseEntity<Spid> editSpid (
-            @RequestBody Spid spid,
-            @RequestParam long id
-    ) throws Exception {
+    public ResponseEntity<Spid> editSpid(@RequestBody Spid spid, @RequestParam long id) throws Exception {
         spid.setId(id);
         Spid updatedSpid = spidService.editSpid(spid);
         return new ResponseEntity(updatedSpid, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/spid")
-    public ResponseEntity<Spid> deleteSpid (
-            @RequestParam(name = "id") long id
-    ) throws Exception {
+    public ResponseEntity<Spid> deleteSpid(@RequestParam(name = "id") long id) throws Exception {
         spidService.deleteSpid(id);
         return new ResponseEntity("Spid-i u fshi me sukses.", HttpStatus.OK);
     }
-
 
 
 }

@@ -13,6 +13,7 @@ import com.project.springbootfinalproject.repository.SpidRepository;
 import com.project.springbootfinalproject.entities.Spid;
 import com.project.springbootfinalproject.entities.Status;
 import com.project.springbootfinalproject.entities.Users;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class SpidService {
         this.spidRepository = spidRepository;
     }
 
-    public Spid createSpid(Spid spid) throws Exception {
+    public Spid createSpid(Spid spid) throws Exception{
         spid.setStatus(Status.PENDING.name());
         return spidRepository.save(spid);
     }
@@ -50,4 +51,17 @@ public class SpidService {
         spidRepository.deleteById(id);
     }
 
+    public List <Spid> findAll() {
+        return spidRepository.findAll();
+    }
+
+
+
+    public Spid findSpidById(long id) throws Exception{
+        Optional<Spid> findIfSpidExists = spidRepository.findById(id);
+        if(!findIfSpidExists.get().getStatus().equals(Status.PENDING.name())) {
+            throw new Exception ("Spid-i nuk do te kthehet.");
+        }
+        return findIfSpidExists.get();
+    }
 }
