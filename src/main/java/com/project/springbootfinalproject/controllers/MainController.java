@@ -1,6 +1,7 @@
 package com.project.springbootfinalproject.controllers;
 
 import com.project.springbootfinalproject.entities.Spid;
+import com.project.springbootfinalproject.entities.Status;
 import com.project.springbootfinalproject.services.SpidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,8 +78,6 @@ public class MainController {
 
     @PostMapping("/create/spid")
     public ResponseEntity<Spid> createSpid(@RequestBody Spid spid) throws Exception {
-        log.info(spid.getStatus());
-        log.info(spid.getType());
         spid.setCreatedAt(LocalDateTime.now());
         Spid savedSpid = spidService.createSpid(spid);
         return new ResponseEntity(savedSpid, HttpStatus.OK);
@@ -96,6 +95,19 @@ public class MainController {
         spidService.deleteSpid(id);
         return new ResponseEntity("Spid-i u fshi me sukses.", HttpStatus.OK);
     }
+
+    @PutMapping("/change/spid/status")
+    public ResponseEntity<Spid> changeSpidStatus(@RequestParam long id) throws Exception {
+        Spid updatedSpidStatus = spidService.changeSpidStatus(id);
+        return new ResponseEntity(updatedSpidStatus, HttpStatus.OK);
+    }
+
+    @GetMapping ("/search/spid")
+    public ResponseEntity<Spid> searchSpid(@RequestParam("name") String name) throws Exception {
+        List<Spid> searchedSpid = spidService.searchSpid(name);
+        return new ResponseEntity(searchedSpid, HttpStatus.OK);
+    }
+
 
 
 }

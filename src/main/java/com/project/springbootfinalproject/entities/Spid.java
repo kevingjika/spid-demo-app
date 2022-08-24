@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "spid")
 
 public class Spid {
 
