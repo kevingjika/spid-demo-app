@@ -86,7 +86,7 @@ public class SpidService implements SpidServiceImpl{
     @Override
     public List<Spid> searchSpid(String message) {
         List<Spid> findIfSpidExists = spidRepository.searchSpidSQL(message);
-        if(findIfSpidExists != null) {
+        if(!findIfSpidExists.isEmpty()) {
             return findIfSpidExists;
         }
         return spidRepository.findAll();
