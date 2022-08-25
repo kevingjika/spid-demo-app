@@ -1,7 +1,7 @@
 package com.project.springbootfinalproject.controllers;
 
 import com.project.springbootfinalproject.entities.Spid;
-import com.project.springbootfinalproject.entities.Status;
+import com.project.springbootfinalproject.entities.Spid.Status;
 import com.project.springbootfinalproject.services.SpidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

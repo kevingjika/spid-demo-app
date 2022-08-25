@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.project.springbootfinalproject.repository.SpidRepository;
 import com.project.springbootfinalproject.entities.Spid;
-import com.project.springbootfinalproject.entities.Status;
 import com.project.springbootfinalproject.entities.Users;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,7 +30,7 @@ public class SpidService implements SpidServiceImpl{
     }
 
     public Spid createSpid(Spid spid) throws Exception{
-        spid.setStatus(Status.PENDING.name());
+        spid.setStatus(Spid.Status.PENDING);
         Optional<Users> findIfUsersExists = usersRepository.findById(spid.getUsers().getId());
         if (!findIfUsersExists.isPresent()){
             throw new Exception("User-i qe kerkoni nuk ekziston.");
@@ -53,7 +52,7 @@ public class SpidService implements SpidServiceImpl{
 
     public void deleteSpid(long id) throws Exception {
         Optional<Spid> findIfSpidExists = spidRepository.findById(id);
-        if(!findIfSpidExists.get().getStatus().equals(Status.PENDING.name())) {
+        if(!findIfSpidExists.get().getStatus().equals(Spid.Status.PENDING.name())) {
             throw new Exception ("Spid-i nuk do te fshihet.");
         }
         spidRepository.deleteById(id);
@@ -67,7 +66,7 @@ public class SpidService implements SpidServiceImpl{
 
     public Spid findSpidById(long id) throws Exception{
         Optional<Spid> findIfSpidExists = spidRepository.findById(id);
-        if(!findIfSpidExists.get().getStatus().equals(Status.PENDING.name())) {
+        if(!findIfSpidExists.get().getStatus().equals(Spid.Status.PENDING.name())) {
             throw new Exception ("Spid-i nuk do te kthehet.");
         }
         return findIfSpidExists.get();
@@ -75,10 +74,10 @@ public class SpidService implements SpidServiceImpl{
 
     public Spid changeSpidStatus(long id) throws Exception{
         Optional<Spid> findIfSpidExists = spidRepository.findById(id);
-        if(!findIfSpidExists.get().getStatus().equals(Status.PENDING.name())) {
+        if(!findIfSpidExists.get().getStatus().equals(Spid.Status.PENDING.name())) {
             throw new Exception ("Statusi i spid-it nuk do te ndryshohet.");
         }
-            findIfSpidExists.get().setStatus(Status.READY_FOR_REVIEW.name());
+            findIfSpidExists.get().setStatus(Spid.Status.READY_FOR_REVIEW);
             return spidRepository.save(findIfSpidExists.get());
     }
 

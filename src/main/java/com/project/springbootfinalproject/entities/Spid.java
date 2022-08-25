@@ -22,8 +22,18 @@ public class Spid {
     private long id;
     private LocalDateTime createdAt;
     private String createdBy;
-    private String status;
-    private String type;
+    private Status status;
+    private Type type;
     @OneToOne(cascade = CascadeType.MERGE)
     private Users users;
+
+    public enum Type {
+        LEVEL_1,
+        LEVEL_2
+    }
+
+    public enum Status {
+        READY_FOR_REVIEW,
+        PENDING
+    }
 }
