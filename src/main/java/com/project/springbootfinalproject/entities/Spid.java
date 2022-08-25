@@ -15,17 +15,15 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "spid")
-
 public class Spid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private long id;
     private LocalDateTime createdAt;
     private String createdBy;
     private String status;
     private String type;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Users users;
 }
